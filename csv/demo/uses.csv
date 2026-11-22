@@ -1,0 +1,6 @@
+﻿use_id,context_id,species_id,unit_id,use_status,purposes,part,method,frequency,importance_notes,notes,source_id
+DEMO_USE_1,DEMO_CA,DEMO_F1,,used,food|commercial,身,焼く。一部は市場へ出す。,調査期間中の複数回,共同の食事で出されたと記載。,,DEMO_SRC_A_USE
+DEMO_USE_2,DEMO_CA,,DEMO_UA2,used,food,身,煮付け,,,,DEMO_SRC_A_USE
+DEMO_USE_3,DEMO_CA,DEMO_F2,,not_used,craft,,,,,調査期・対象集団の工芸利用に限った記載。,DEMO_SRC_A_USE
+DEMO_USE_4,DEMO_CB,,DEMO_UB2,used,craft|tool,皮,乾燥させ、飾りや道具の部品にする。,,,,DEMO_SRC_B_USE
+DEMO_USE_5,DEMO_CB,DEMO_F3,,unknown,,,,,,利用に関する記載を資料内で確認できなかった。,DEMO_SRC_B_USE

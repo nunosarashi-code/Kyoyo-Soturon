@@ -1,0 +1,8 @@
+﻿unit_id,context_id,unit_label,parent_unit_id,hierarchy_level,life_stage_size,criteria,unit_status,source_id
+DEMO_UA1,DEMO_CA,ミオカゼ単位,,,,体形,documented,DEMO_SRC_A
+DEMO_UA2,DEMO_CA,ナギマト単位,,,,似た体色でまとめる,documented,DEMO_SRC_A
+DEMO_UB1,DEMO_CB,コツキ単位,DEMO_UB0,下位,小型個体,体長の目視,documented,DEMO_SRC_B
+DEMO_UB2,DEMO_CB,オオツキ単位,DEMO_UB0,下位,成魚,成長段階,documented,DEMO_SRC_B
+DEMO_UB0,DEMO_CB,ツキミオの上位単位,,上位,,,documented,DEMO_SRC_B
+DEMO_UB3,DEMO_CB,スズトウ候補単位,,,,,provisional,DEMO_SRC_B_PENDING
+DEMO_UB4,DEMO_CB,ユラマト単位,,,,背の模様,documented,DEMO_SRC_B

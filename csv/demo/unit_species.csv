@@ -1,0 +1,9 @@
+﻿mapping_id,unit_id,species_id,certainty,source_id,notes
+DEMO_M1,DEMO_UA1,DEMO_F1,confirmed,DEMO_SRC_A,
+DEMO_M2A,DEMO_UA2,DEMO_F2,confirmed,DEMO_SRC_A,
+DEMO_M2B,DEMO_UA2,DEMO_F3,confirmed,DEMO_SRC_A,
+DEMO_M3A,DEMO_UB1,DEMO_F1,confirmed,DEMO_SRC_B,
+DEMO_M3B,DEMO_UB2,DEMO_F1,confirmed,DEMO_SRC_B,
+DEMO_M4,DEMO_UB3,DEMO_F4,uncertain,DEMO_SRC_B_PENDING,
+DEMO_M5A,DEMO_UB4,DEMO_F2,confirmed,DEMO_SRC_B,
+DEMO_M5B,DEMO_UB4,DEMO_F2,probable,DEMO_SRC_B_PENDING,独立した暫定記載。
