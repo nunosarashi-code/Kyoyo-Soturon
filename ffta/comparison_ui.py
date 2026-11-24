@@ -1,9 +1,6 @@
 """調査文脈と出典を参照できる地域比較画面。"""
 from dataclasses import asdict
-from html import escape
-from math import ceil
 
-import plotly.graph_objects as go
 import streamlit as st
 
 from .comparison import EVIDENCE_POLICY, ComparisonFilters, compare_local_names
@@ -11,24 +8,7 @@ from .exports import csv_bytes, result_archive
 from .model import NAME_STATUS
 from .query import Dataset
 from .ui import context_labels, show_sources, show_table
-
-
-def _chart(summary, prefectures: tuple[str, str]) -> go.Figure:
-    names = [
-        f"{escape(row.standard_name or row.scientific_name or row.species_id)} [{escape(row.species_id)}]"
-        for row in summary.itertuples(index=False)
-    ]
-    figure = go.Figure()
-    for side, prefecture, color in zip(("left", "right"), prefectures, ("#246682", "#08746B"), strict=True):
-        figure.add_bar(
-            name=escape(prefecture), x=summary[f"record_count_{side}"], y=names, orientation="h",
-            marker_color=color, hovertemplate="%{y}<br>地方名記録数 %{x}<extra>%{fullData.name}</extra>",
-        )
-    max_count = summary[["record_count_left", "record_count_right"]].max().max()
-    figure.update_layout(barmode="group", xaxis_title="地方名記録数", height=max(350, 46 * len(summary) + 130))
-    figure.update_xaxes(rangemode="tozero", dtick=max(1, ceil(max_count / 12)))
-    figure.update_yaxes(autorange="reversed", automargin=True)
-    return figure
+from .visuals import comparison_figure
 
 
 def comparison_page(data: Dataset) -> None:
@@ -51,11 +31,13 @@ def comparison_page(data: Dataset) -> None:
     labels = context_labels(data)
     regions = data.tables["regions"]
     contexts = data.tables["contexts"].merge(regions[["region_id", "prefecture"]], on="region_id")
+    name_contexts = set(data.tables["local_names"]["context_id"])
     chosen = []
     for index, (column, prefecture) in enumerate(zip(columns, (first, second), strict=True)):
         options = contexts.loc[contexts["prefecture"].eq(prefecture), "context_id"].tolist()
+        defaults = [context_id for context_id in options if context_id in name_contexts]
         selected = column.multiselect(
-            "調査文脈", options, default=options, format_func=labels.get,
+            "調査文脈", options, default=defaults or options, format_func=labels.get,
             key=f"compare_contexts_{data.kind}_{index}_{prefecture}",
         )
         chosen.append(selected)
@@ -85,7 +67,7 @@ def comparison_page(data: Dataset) -> None:
                 "record_count_right": f"{second}の記録数",
             })
             st.dataframe(display, hide_index=True, width="stretch")
-            st.plotly_chart(_chart(summary, filters.prefectures), width="stretch", key=f"comparison_chart_{data.kind}")
+            st.plotly_chart(comparison_figure(summary, filters.prefectures), width="stretch", key=f"comparison_chart_{data.kind}")
             st.download_button(
                 "比較表をCSVでダウンロード", csv_bytes(summary, data.kind), "ffta_regional_comparison.csv",
                 "text/csv", on_click="ignore",

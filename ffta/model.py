@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 
 SCHEMA_VERSION = 1
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 DEMO_PREFIX = "DEMO_"
 
 VERIFICATION = {"verified": "確認済み", "unverified": "未確認", "unknown": "出典不明"}

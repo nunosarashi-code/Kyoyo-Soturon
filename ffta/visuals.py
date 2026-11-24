@@ -1,5 +1,6 @@
 """文脈ごとの分類単位と魚種の対応図。"""
 from html import escape
+from math import ceil
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -86,4 +87,22 @@ def correspondence_figure(
         paper_bgcolor="#ffffff",
         plot_bgcolor="#ffffff",
     )
+    return figure
+
+
+def comparison_figure(summary: pd.DataFrame, prefectures: tuple[str, str]) -> go.Figure:
+    names = [
+        f"{_text(row.standard_name or row.scientific_name or row.species_id)} [{_text(row.species_id)}]"
+        for row in summary.itertuples(index=False)
+    ]
+    figure = go.Figure()
+    for side, prefecture, color in zip(("left", "right"), prefectures, ("#246682", "#08746B"), strict=True):
+        figure.add_bar(
+            name=_text(prefecture), x=summary[f"record_count_{side}"], y=names, orientation="h",
+            marker_color=color, hovertemplate="%{y}<br>地方名記録数 %{x}<extra>%{fullData.name}</extra>",
+        )
+    max_count = summary[["record_count_left", "record_count_right"]].max().max() if len(summary) else 0
+    figure.update_layout(barmode="group", xaxis_title="地方名記録数", height=max(350, 46 * len(summary) + 130))
+    figure.update_xaxes(rangemode="tozero", dtick=max(1, ceil(max_count / 12)))
+    figure.update_yaxes(autorange="reversed", automargin=True)
     return figure

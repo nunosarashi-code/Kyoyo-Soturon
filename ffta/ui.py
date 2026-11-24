@@ -216,6 +216,8 @@ def classification_page(data: Dataset) -> None:
             "左が魚種、右が民俗分類単位です。出典や別名の数にかかわらず、1組の対応を重み1の線で示します。"
             "比較する際は調査範囲、時期、利用者集団、記録方法を確認してください。"
         )
+        if result["folk_units"]["unit_status"].eq("provisional").any():
+            st.caption("仮置き単位を含みます。単位の確定度と対応の根拠は対応表で確認できます。")
         for context_id in selected:
             figure = correspondence_figure(
                 result["unit_species"], context_id=context_id, context_label=context_names[context_id], kind=data.kind,
