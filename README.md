@@ -114,6 +114,20 @@ python -m ffta.rebuild path/to/normalized-full-csv --database path/to/recovery-c
 FFTA_DATA_DIR=path/to/recovery-check python -m streamlit run app.py
 ```
 
+## Phase 2の原資料照合を反映したDBを作る
+
+2026年11月25日の資料照合は `research/phase2/` にあります。地方名79件の掲載事実、現行学名と旧資料の分類名、仮置き単位28件の判定、利用記録の根拠と保留理由を、復旧版のIDで追跡できます。 [データ品質評価](./research/phase2/data_quality_report.md) · [分析準備状況](./research/phase2/analysis_readiness.md)
+
+復旧版 `c52a0fb` の研究用SQLiteを入力に指定します。元DBと異なるパスに検証用DBを作成し、両方のSHA-256を表示します。入力は監査対象のSHA-256と一致するDBに限ります。
+
+```bash
+python -m ffta.apply_phase2_audit path/to/recovered/research/ffta.sqlite3 \
+  --audit-dir research/phase2 --database data/phase2-validation/ffta.sqlite3
+FFTA_DATA_DIR=data/phase2-validation python -m streamlit run app.py
+```
+
+検証用DBでは、資料への掲載を確認できた地方名に照合注記を入れ、大きさ・成長段階の根拠がある24件に記載を追加します。学名欄は本村の目録ver.43に揃え、WoRMSと異なる2件は未確認とします。地方名と生物学的種の対応の確実性と、仮置き単位の状態は維持します。用途の候補は `use_evidence.csv` に記録されています。
+
 ## 地域間比較の集計単位
 
 - 選択した都道府県・調査文脈ごとに、魚種IDと地方名IDの組を1件と数えます。同じ地方名への複数の対応根拠を集約し、異なる地方名IDは表記が同じでも別の記録として扱います。
@@ -160,6 +174,12 @@ Windowsでは `.\.venv\Scripts\python.exe -m pytest -q` を使います。SQLite
 FFTA_RECOVERY_TEST_BUNDLE=path/to/FFTA_recovery_bundle_2026-11-23.zip python -m pytest -q -ra
 ```
 
-- **Phase 2**　比較可能性を判断したうえでの統合・細分化・曖昧さの集計、分類粒度 `D` による地域間の定量比較、データ不足時の「算出不可」の判定。
+`FFTA_PHASE2_TEST_DB` に復旧版の元DBを指定すると、Phase 2の監査反映テストも実行できます。テスト用の一時ファイルで、不確実性の維持と文脈の不整合の検出を確認します。
+
+```bash
+FFTA_PHASE2_TEST_DB=path/to/recovered/research/ffta.sqlite3 python -m pytest -q -ra tests/test_phase2_audit.py
+```
+
+- **Phase 2**　原資料照合と分析準備状況を記録済み。分類粒度 `D` の算出には、調査範囲の揃った資料と分類単位の確定が必要です。
 - **Phase 3**　H1〜H3に沿った利用との比較、散布図・箱ひげ図、記述統計、前提を満たす場合の推測統計。SciPyはこのフェーズの候補。
 - **Phase 4**　外部分類データベースとの連携、資料収集支援、レポート出力の拡充。
