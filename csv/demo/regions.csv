@@ -1,0 +1,3 @@
+﻿region_id,prefecture,locality,latitude,longitude,characteristics,survey_period,source_id
+DEMO_RA,架空波棚県,架空潮棚集落,,,架空の砂浜沿岸,2020–2021年,DEMO_SRC_A
+DEMO_RB,架空月棚県,架空月入集落,,,架空の岩礁沿岸,2023年,DEMO_SRC_B

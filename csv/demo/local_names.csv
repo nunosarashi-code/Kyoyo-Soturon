@@ -1,0 +1,10 @@
+﻿local_name_id,spelling,reading,context_id,unit_id,form_type,life_stage_size,notes,source_id
+DEMO_NA1,ミオカゼ,みおかぜ,DEMO_CA,DEMO_UA1,label,,,DEMO_SRC_A
+DEMO_NA1_ALT,シオミオ,しおみお,DEMO_CA,DEMO_UA1,synonym,,,DEMO_SRC_A
+DEMO_NA2,ナギマト,なぎまと,DEMO_CA,DEMO_UA2,label,,,DEMO_SRC_A
+DEMO_NB0,ツキミオ,つきみお,DEMO_CB,DEMO_UB0,label,,,DEMO_SRC_B
+DEMO_NB1,コツキ,こつき,DEMO_CB,DEMO_UB1,label,小型個体,,DEMO_SRC_B
+DEMO_NB2,オオツキ,おおつき,DEMO_CB,DEMO_UB2,label,成魚,,DEMO_SRC_B
+DEMO_NB3,スズトウ,すずとう,DEMO_CB,DEMO_UB3,label,,,DEMO_SRC_B_PENDING
+DEMO_NB4,ユラマト,ゆらまと,DEMO_CB,DEMO_UB4,label,,,DEMO_SRC_B
+DEMO_NX,カリトウ,かりとう,DEMO_CB,,unresolved,,,DEMO_SRC_B_PENDING

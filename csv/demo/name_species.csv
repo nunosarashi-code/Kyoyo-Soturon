@@ -1,0 +1,3 @@
+﻿name_mapping_id,local_name_id,species_id,certainty,source_id,notes
+DEMO_NM1,DEMO_NX,DEMO_F3,probable,DEMO_SRC_B_PENDING,
+DEMO_NM2,DEMO_NX,DEMO_F4,uncertain,DEMO_SRC_B_PENDING,
